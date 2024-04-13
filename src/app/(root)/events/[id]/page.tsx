@@ -86,7 +86,7 @@ const EventPage = async ({
               </div>
             </div>
             <div className="flex flex-col gap-2">
-              <p className="p-bold-20 text-grey-600">What you'll learn?</p>
+              <p className="p-bold-20 text-grey-600">What you&apos;ll learn?</p>
               <p className="p-medium-16 lg:p-regular-18">{event.decription}</p>
               <p className="p-medium-16 lg:p-regular-18 truncate text-primary-500 underline cursor-pointer">
                 {event.url}
