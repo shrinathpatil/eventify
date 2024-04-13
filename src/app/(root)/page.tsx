@@ -1,8 +1,21 @@
+import { getAllEvents } from "@/actions/event.actions";
+import { getUserById } from "@/actions/user.actions";
+import Collection from "@/components/shared/Collection";
 import { Button } from "@/components/ui/button";
+import { auth } from "@clerk/nextjs";
 import Image from "next/image";
 import Link from "next/link";
 
-const HomePage = () => {
+const HomePage = async () => {
+  const { userId } = auth();
+  const user = await getUserById(userId!);
+  const events = await getAllEvents({
+    query: "",
+    category: "",
+    page: 1,
+    limit: 6,
+  });
+
   return (
     <>
       <section className="bg-primary-50 bg-dotted-pattern bg-contain py-5 md:py-10">
@@ -39,6 +52,16 @@ const HomePage = () => {
         <div className="flex flex-col w-full gap-5 md:flex-row">
           Search Category
         </div>
+        <Collection
+          data={events?.data}
+          emptyTitle="No events found"
+          emptyStateSubText="come back later"
+          collectionType="All_Events"
+          limit={6}
+          page={1}
+          totalPages={2}
+          userId={user?._id}
+        />
       </section>
     </>
   );
