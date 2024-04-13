@@ -35,7 +35,7 @@ type Props = {
   db_userId: string;
   event?: IEvent;
   type: "Create" | "Update";
-  eventId: string;
+  eventId?: string;
 };
 const EventForm = ({ type, event, userId, db_userId, eventId }: Props) => {
   const initialValues =
