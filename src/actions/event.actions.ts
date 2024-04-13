@@ -150,7 +150,7 @@ export const deleteEvent = async ({ eventId, path }: DeleteEventParams) => {
 
 export const getEventsByUser = async ({
   userId,
-  limit = 6,
+  limit = 3,
   page,
 }: GetEventsByUserParams) => {
   try {

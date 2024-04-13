@@ -5,9 +5,9 @@ import { SearchParamProps } from "@/types";
 import { auth } from "@clerk/nextjs";
 
 const UpdateEvent = async ({ params: { id } }: SearchParamProps) => {
-  const { userId } = auth();
-  const user = await getUserById(userId!);
-  const event = await getEventById(id);
+  const { userId } = auth(); //clerk user
+  const user = await getUserById(userId!); //get db userId for the user
+  const event = await getEventById(id); //get event by id
   return (
     <>
       <section className="bg-primary-50 bg-dotted-pattern bg-cover bg-center py-5 md:py-10">

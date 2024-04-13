@@ -3,8 +3,9 @@ import EventForm from "@/components/shared/EventForm";
 import { auth } from "@clerk/nextjs";
 
 const CreateEvent = async () => {
-  const { userId } = auth();
-  const user = await getUserById(userId!);
+  const { userId } = auth(); //clerk user
+  const user = await getUserById(userId!); //get db userId for the user
+
   return (
     <>
       <section className="bg-primary-50 bg-dotted-pattern bg-cover bg-center py-5 md:py-10">

@@ -38,6 +38,7 @@ type Props = {
   eventId?: string;
 };
 const EventForm = ({ type, event, userId, db_userId, eventId }: Props) => {
+  // set initial values for the form
   const initialValues =
     event && type === "Update"
       ? {
@@ -57,6 +58,8 @@ const EventForm = ({ type, event, userId, db_userId, eventId }: Props) => {
           isFree: false,
           url: "",
         };
+
+  // hooks
   const router = useRouter();
   const [files, setFiles] = useState<File[]>([]);
   const form = useForm<z.infer<typeof eventFormSchema>>({
@@ -65,6 +68,7 @@ const EventForm = ({ type, event, userId, db_userId, eventId }: Props) => {
   });
   const { startUpload, isUploading } = useUploadThing("imageUploader");
 
+  //on submit funtion
   const onSubmit = async (values: z.infer<typeof eventFormSchema>) => {
     let uploadedImageUrl = values.imageUrl;
 

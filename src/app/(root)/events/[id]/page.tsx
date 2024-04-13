@@ -14,9 +14,11 @@ const EventPage = async ({
   params: { id },
   searchParams,
 }: SearchParamProps) => {
-  const event = await getEventById(id);
-  const { userId } = auth();
-  const user = await getUserById(userId!);
+  const event = await getEventById(id); //get event by id
+  const { userId } = auth(); //clerk user
+  const user = await getUserById(userId!); //get db userId for the user
+
+  //get related events by category
   const relatedEvents = await getRelatedEventsByCategory({
     categoryId: event.category._id,
     eventId: event._id,
@@ -103,9 +105,9 @@ const EventPage = async ({
           data={relatedEvents?.data}
           emptyStateSubText="Come back Later!"
           emptyTitle="No Related Events Found!"
-          limit={6}
-          page={1}
-          totalPages={2}
+          limit={3}
+          page={searchParams.page as string}
+          totalPages={relatedEvents?.totalPages || 1}
         />
       </section>
     </>

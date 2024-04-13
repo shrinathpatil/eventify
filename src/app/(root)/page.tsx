@@ -1,18 +1,26 @@
 import { getAllEvents } from "@/actions/event.actions";
 import { getUserById } from "@/actions/user.actions";
+import CategoryFilter from "@/components/shared/CategoryFilter";
 import Collection from "@/components/shared/Collection";
+import Search from "@/components/shared/Search";
 import { Button } from "@/components/ui/button";
+import { SearchParamProps } from "@/types";
 import { auth } from "@clerk/nextjs";
 import Image from "next/image";
 import Link from "next/link";
 
-const HomePage = async () => {
-  const { userId } = auth();
-  const user = await getUserById(userId!);
+const HomePage = async ({ searchParams }: SearchParamProps) => {
+  const { userId } = auth(); //user from clerk
+  const page = Number(searchParams?.page) || 1;
+  const searchText = (searchParams?.query as string) || "";
+  const category = (searchParams?.category as string) || "";
+  const user = await getUserById(userId!); //get user from database
+
+  //to get all events
   const events = await getAllEvents({
-    query: "",
-    category: "",
-    page: 1,
+    query: searchText,
+    category,
+    page,
     limit: 6,
   });
 
@@ -50,7 +58,8 @@ const HomePage = async () => {
           thousands of Events
         </h2>
         <div className="flex flex-col w-full gap-5 md:flex-row">
-          Search Category
+          <Search placeholder="Search events..." />
+          <CategoryFilter />
         </div>
         <Collection
           data={events?.data}
@@ -58,8 +67,8 @@ const HomePage = async () => {
           emptyStateSubText="come back later"
           collectionType="All_Events"
           limit={6}
-          page={1}
-          totalPages={2}
+          page={page}
+          totalPages={events?.totalPages || 1}
           userId={user?._id}
         />
       </section>
